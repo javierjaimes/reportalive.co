@@ -14,8 +14,10 @@ io.sockets.on( 'connection', function( socket ){
   
   redis.on( 'message', function( channel, message ){
     console.log( 'reddis', channel, message );
+    message = JSON.parse( message );
+    console.log( message.emit );
 
-    socket.emit( 'new_extend', message );
+    socket.emit( message.emit, message );
   })
 
   socket.emit( 'welcome', { message: 'Hello World!' });
