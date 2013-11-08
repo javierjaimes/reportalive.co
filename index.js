@@ -13,10 +13,11 @@ app.get( '/', function( req, res ){
 io.sockets.on( 'connection', function( socket ){
   
   redis.on( 'message', function( channel, message ){
-    console.log( 'reddis', channel, message );
-    message = JSON.parse( message );
-    console.log( message.emit );
+    //console.log( 'reddis', channel, message );
+    //
+    //console.log( message.emit );
 
+    message = JSON.parse( message );
     socket.emit( message.emit, message );
   })
 
