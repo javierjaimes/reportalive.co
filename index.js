@@ -1,7 +1,3 @@
-var app = require( 'express' )(),
-    server = require( 'http' ).createServer( app ),
-    io = require( 'socket.io' ).listen( server );
-
 //Connect to RedisToGo at Heroku
 if (process.env.REDISTOGO_URL) {
   var rtg   = require("url").parse(process.env.REDISTOGO_URL);
@@ -11,6 +7,11 @@ if (process.env.REDISTOGO_URL) {
 } else {
   var redis = require("redis").createClient();
 }
+
+var app = require( 'express' )(),
+    server = require( 'http' ).createServer( app ),
+    io = require( 'socket.io' ).listen( server );
+
 
 redis.subscribe( 'r-live' );
 server.listen( process.env.PORT || 8080 );
