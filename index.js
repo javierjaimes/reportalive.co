@@ -17,7 +17,7 @@ redis.subscribe( 'r-live' );
 server.listen( process.env.PORT || 8080 );
 
 app.get( '/', function( req, res ){
-  res.sendFile( __dirname + '/index.html' );
+  res.sendfile( __dirname + '/index.html' );
 })
 
 io.sockets.on( 'connection', function( socket ){
