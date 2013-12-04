@@ -1,6 +1,8 @@
 var redisp = process.env.REDISTOGO_URL || 6379,
     expressp = process.env.PORT || 8080;
 
+console.log( redisp );
+
 var app = require( 'express' )(),
     server = require( 'http' ).createServer( app ),
     io = require( 'socket.io' ).listen( server ),
