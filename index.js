@@ -1,10 +1,13 @@
+var redisp = process.env.REDISTOGO_URL || 6379,
+    expressp = process.env.PORT || 8080;
+
 var app = require( 'express' )(),
     server = require( 'http' ).createServer( app ),
     io = require( 'socket.io' ).listen( server ),
-    redis = require( 'redis' ).createClient();
+    redis = require( 'redis' ).createClient( redisp );
 
 redis.subscribe( 'r-live' );
-server.listen( 8080 );
+server.listen( expressp );
 
 app.get( '/', function( req, res ){
   res.sendFile( __dirname + '/index.html' );
@@ -13,9 +16,6 @@ app.get( '/', function( req, res ){
 io.sockets.on( 'connection', function( socket ){
   
   redis.on( 'message', function( channel, message ){
-    //console.log( 'reddis', channel, message );
-    //
-    //console.log( message.emit );
 
     message = JSON.parse( message );
     socket.emit( message.emit, message );
@@ -23,8 +23,5 @@ io.sockets.on( 'connection', function( socket ){
 
   socket.emit( 'welcome', { message: 'Hello World!' });
 
-  /*socket.on( 'start', function( data ){
-    console.log( data );
-  })*/
 })
 
